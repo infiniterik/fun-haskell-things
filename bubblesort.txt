@@ -1,0 +1,22 @@
+bubble :: Ord a => [a] -> [a]
+bubble [] = []
+bubble [a] = [a]
+bubble (x:xs) | x > head xs  = head xs : bubble (x: drop 1 xs)
+              | otherwise     = x : bubble xs
+
+bsort :: Ord a => [a] -> [a]
+bsort [] = []
+bsort [a] = [a]
+bsort (x:xs) | not (sorted (x:xs)) = bsort (bubble (x:xs))
+             | otherwise           = x:xs
+
+--for each x in xs, check if the rest of the list after that val contains entirely values greater than x, if true then repeat for each val in xs
+
+sorted :: Ord a => [a] -> Bool
+sorted [] = True
+sorted (x:xs) | null [ c | c <- xs, x > c] = sorted xs
+              | otherwise                  = False
+
+l = [2,1,3,4]
+l2 = [2,3,4,4,1,4,5]
+l3 = [4,2,3,5,4,1,3,2]
